@@ -1,5 +1,5 @@
 import { GlassCard } from './GlassCard';
-import { Server } from 'lucide-react';
+import { ListTodo, RefreshCw } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { APILinks } from '../utilities/apiLinks';
 
@@ -53,10 +53,13 @@ export function ToDoList() {
             {/* ToDoList */}
             < GlassCard className="col-span-full md:col-span-2 lg:col-span-2 row-span-1 h-full" >
                 <div className="flex items-center gap-2 mb-3 text-primary/80">
-                    <Server size={18} />
+                    <ListTodo size={18} />
                     <h3 className="font-semibold text-sm">ToDoList</h3>
+                    <div onClick={fetchLogs} className="ml-auto cursor-pointer self-end">
+                        <RefreshCw size={18} />
+                    </div>
                 </div>
-                <div className="flex-1 height-max pr-2 font-mono text-[0.65rem] md:text-xs space-y-2">
+                <div className="flex-1 height-max font-mono text-[0.65rem] md:text-xs space-y-2">
                     {logs.map((log, i) => (
                         <div
                             key={i}
