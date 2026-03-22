@@ -29,6 +29,7 @@ export function EloGraph() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true);
                 const response = await fetch(APILinks.lfm);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -42,6 +43,7 @@ export function EloGraph() {
                 }));
 
                 setData(processedData);
+                setError(null);
             } catch (err) {
                 console.error("Failed to fetch ELO data:", err);
                 setError('Failed to load data');
@@ -51,6 +53,13 @@ export function EloGraph() {
         };
 
         fetchData();
+
+        const handleRefresh = () => {
+            fetchData();
+        };
+
+        window.addEventListener('refreshData', handleRefresh);
+        return () => window.removeEventListener('refreshData', handleRefresh);
     }, []);
 
     const CurrentElo = data.length > 0 ? data[data.length - 1].rating : 0;
@@ -76,7 +85,7 @@ export function EloGraph() {
                         Assetto Corsa
                     </div>
                 </div>
-                {!loading && (
+                {data.length > 0 && (
                     <div className="text-right">
                         <div className="text-2xl font-bold text-primary">{CurrentElo}</div>
                         <div className={`text-xs font-bold ${diff >= 0 ? 'text-green-600' : 'text-red-600'}`}>
@@ -86,12 +95,13 @@ export function EloGraph() {
                 )}
             </div>
 
-            <div className="flex-1 w-full min-h-[200px]">
-                {loading ? (
-                    <div className="h-full flex items-center justify-center">
+            <div className="flex-1 w-full min-h-[200px] relative">
+                {loading && (
+                    <div className={`absolute inset-0 z-10 flex items-center justify-center rounded-lg ${data.length > 0 ? 'bg-primary/5' : ''}`}>
                         <Loader2 className="animate-spin text-primary/50" size={32} />
                     </div>
-                ) : (
+                )}
+                {data.length > 0 && (
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={data}>
                             <defs>

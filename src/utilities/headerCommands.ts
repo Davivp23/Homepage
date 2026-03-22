@@ -12,7 +12,8 @@ const WEBSITE_COMMANDS: Record<string, string> = {
     '!git': 'https://github.com',
     '!ig': 'https://www.instagram.com',
     '!lfm': 'https://www.lowfuelmotorsport.com',
-    '!se': 'https://vaznet.ssh.cx/solid.apk'
+    '!se': 'https://vaznet.ssh.cx/solid.apk',
+    "!gd": "https://drive.google.com/"
 };
 
 const APP_COMMANDS: Record<string, (arg: string) => void> = {

@@ -17,7 +17,6 @@ export function ToDoList() {
             const res = await fetch(APILinks.upcomingTasks);
             const data = await res.json();
             setLogs(data);
-            console.log(data);
         } catch (e) {
             console.error("Error logs", e);
         }
@@ -55,7 +54,8 @@ export function ToDoList() {
                 <div className="flex items-center gap-2 mb-3 text-primary/80">
                     <ListTodo size={18} />
                     <h3 className="font-semibold text-sm">ToDoList</h3>
-                    <div onClick={fetchLogs} className="ml-auto cursor-pointer self-end">
+                    <div onClick={fetchLogs}
+                        className="ml-auto cursor-pointer self-end mb-1 transition-transform active:rotate-180">
                         <RefreshCw size={18} />
                     </div>
                 </div>

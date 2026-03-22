@@ -6,7 +6,8 @@ import {
     Medal,
     Flag,
     Skull,
-    Award
+    Award,
+    RefreshCw
 } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
 import { APILinks } from '../utilities/apiLinks';
@@ -28,21 +29,23 @@ export function TrophyShelf() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<boolean>(false);
 
-    useEffect(() => {
-        const fetchStats = async () => {
-            try {
-                const response = await fetch(APILinks.userStats);
-                if (!response.ok) throw new Error('Failed to fetch stats');
-                const data = await response.json();
-                setStats(data);
-            } catch (err) {
-                console.error("Error fetching stats:", err);
-                setError(true);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const fetchStats = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(APILinks.userStats);
+            if (!response.ok) throw new Error('Failed to fetch stats');
+            const data = await response.json();
+            setStats(data);
+            setError(false);
+        } catch (err) {
+            console.error("Error fetching stats:", err);
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchStats();
     }, []);
 
@@ -66,9 +69,21 @@ export function TrophyShelf() {
 
     return (
         <GlassCard className="col-span-full md:col-span-2 lg:col-span-1 flex flex-col gap-4">
-            <h3 className="font-semibold text-primary flex items-center gap-2 mb-2">
-                <Trophy size={18} className="text-primary" /> Sala de trofeos
-            </h3>
+
+            <div className="flex items-center gap-2 mb-3 text-primary/80">
+                <h3 className="font-semibold text-primary flex items-center gap-2">
+                    <Trophy size={18} className="text-primary" /> Sala de trofeos
+                </h3>
+                <div
+                    onClick={() => {
+                        fetchStats();
+                        window.dispatchEvent(new Event('refreshData'));
+                    }}
+                    className="ml-auto cursor-pointer self-end mb-1 transition-transform active:rotate-180"
+                >
+                    <RefreshCw size={18} />
+                </div>
+            </div>
 
             {/* Top Tier: Wins, Podiums, Poles */}
             <div className="grid grid-cols-3 gap-2">
