@@ -58,7 +58,7 @@ function App() {
         loading: "linear-gradient(135deg, #000000 0%, #000000 50%, #000000 100%)",
         day: "linear-gradient(135deg, #60a5fa 0%, #93c5fd 50%, #e0f2fe 100%)",
         dawn: "linear-gradient(135deg, #ffb914 0%, #fe713e 60%, #ef4444 85%, #4f46e5 100%)",
-        night: "linear-gradient(135deg, #a6b1fa 0%, #c4b5fd 50%, #bae6fd 100%)"
+        night: "linear-gradient(135deg, #a6b1fa 0%, #c4b5fd 50%, #6366f1 100%)"
     };
 
     const BackgroundLayers = () => (
